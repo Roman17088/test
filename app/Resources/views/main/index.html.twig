@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div id="wrapper">
+        <div id="container">
+            <p>
+                {{ render_esi(
+                    controller('AppBundle:Ajax:randNumber', { 'maxNumber': 5000 })
+                ) }}
+            </p>
+
+            <p>{{ 'Current locale'|trans }}: {{ locale }}</p>
+
+            <p>{{ 'Symfony is great!'|trans }}</p>
+
+            <div id="welcome">
+                <h1>Symfony
+                    {{ constant('Symfony\\Component\\HttpKernel\\Kernel::VERSION') }}
+                </h1>
+            </div>
+
+            <div id="status">
+                <p>
+                    {% trans %}
+                        Your application is now ready. You can start working on it at
+                    {% endtrans %}:
+                    <code>{{ base_dir }}</code>
+                </p>
+            </div>
+
+            <div id="next">
+                <h2>{{ 'What\'s next?'|trans }}</h2>
+                <p>
+                    {% set url = 'main/' ~ locale ~ '/locale.html.twig' %}
+                    {% include url %}
+                </p>
+            </div>
+
+        </div>
+    </div>
+{% endblock %}

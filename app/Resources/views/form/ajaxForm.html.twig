@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div id="wrapper">
+        <div id="container">
+            {{ form_start(form) }}
+            {{ form_widget(form) }}
+            {{ form_end(form) }}
+            {{ session }}
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        app.controller('ctrlForm', ['$scope', '$http', function ($scope, $http) {
+            var xhr, formName = 'ajax_task', query = {};
+            $scope.user = {};
+            $scope.error = 0;
+            $scope.submit = function () {
+                query[formName] = getCanonicalData($scope, formName, $scope.user);
+                xhr = $http({
+                    method: 'post',
+                    url: window.location.origin + '/form/ajax/processing/',
+                    data: query,
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest',
+                    }
+                });
+                xhr.then(function (res) {
+                    console.log([res, $scope]);
+                    $scope.error = 0;
+                }).catch(function (res) {
+                    console.error(res);
+                    $scope.error = 1;
+                    console.log([res, $scope]);
+                });
+            }
+        }]);
+
+        /*----- получение токена и формирование данных в нужный формат -----*/
+        function getCanonicalData($scope, formName, data) {
+            var formDOM = $scope[formName].$$element[0],
+                name = formName + '[_token]',
+                elems = formDOM.elements,
+                newData = data;
+            if (elems.hasOwnProperty(name)) {
+                newData._token = elems[name].value;
+            }
+            return newData;
+        }
+        /*--- end получение токена и формирование данных в нужный формат ---*/
+    </script>
+{% endblock %}

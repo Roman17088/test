@@ -1,0 +1,62 @@
+form.locale:
+    path: /form/
+    host: '{_locale}.{_domain}'
+    defaults:
+        _controller: AppBundle:Form:index
+        _locale: '%locale%'
+        _domain: '%domain%'
+    requirements:
+        _locale: '%requirements_locale%'
+        _domain: '%requirements_domain%'
+form:
+    path: /form/
+    defaults: { _controller: AppBundle:Form:index }
+
+ajax-form.locale:
+    path: /form/ajax/
+    host: '{_locale}.{_domain}'
+    defaults:
+        _controller: AppBundle:Form:ajaxForm
+        _locale: '%locale%'
+        _domain: '%domain%'
+    requirements:
+        _locale: '%requirements_locale%'
+        _domain: '%requirements_domain%'
+ajax-form:
+    path: /form/ajax/
+    defaults: { _controller: AppBundle:Form:ajaxForm }
+
+ajax-form-router.locale:
+    path: /form/ajax/{slug}
+    host: '{_locale}.{_domain}'
+    defaults:
+        _controller: AppBundle:Form:ajaxRouter
+        slug: ''
+        _locale: '%locale%'
+        _domain: '%domain%'
+    requirements:
+        _locale: '%requirements_locale%'
+        _domain: '%requirements_domain%'
+    condition: 'request.isXmlHttpRequest()'
+ajax-form-router:
+    path: /form/ajax/{slug}
+    defaults:
+        _controller: AppBundle:Form:ajaxRouter
+        slug: ''
+    condition: 'request.isXmlHttpRequest()'
+
+#ajax-form-processing.locale:
+#    path: /form/ajax/processing/
+#    host: '{_locale}.{_domain}'
+#    defaults:
+#        _controller: AppBundle:Form:ajaxFormProcessing
+#        _locale: '%locale%'
+#        _domain: '%domain%'
+#    requirements:
+#        _locale: '%requirements_locale%'
+#        _domain: '%requirements_domain%'
+#    condition: 'request.isXmlHttpRequest()'
+#ajax-form-processing:
+#    path: /form/ajax/processing/
+#    defaults: { _controller: AppBundle:Form:ajaxFormProcessing }
+#    condition: 'request.isXmlHttpRequest()'
